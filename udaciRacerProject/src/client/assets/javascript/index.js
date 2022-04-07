@@ -7,7 +7,6 @@ let store = {
 	race_id: undefined,
 }
 
-const hellYeah = document.getElementById('hellfire')
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
 	onPageLoad()
