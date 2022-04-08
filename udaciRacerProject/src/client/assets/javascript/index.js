@@ -91,9 +91,10 @@ async function handleCreateRace() {
 
 
 	// TODO - update the store with the race id
-	updateStore(store, {race_id: race.id - 1})
+	updateStore(store, {race_id: parseInt(race.ID - 1)})
 	console.log(race)
 	console.log(race.ID)
+	console.log(store)
 
 	// render starting UI
 	renderAt('#race', renderRaceStartView(track_id, player_id))
