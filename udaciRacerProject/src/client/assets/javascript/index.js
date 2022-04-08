@@ -78,6 +78,10 @@ async function handleCreateRace() {
 	renderAt('#race', renderRaceStartView())
 
 	// TODO - Get player_id and track_id from the store
+	const player_id = store.player_id
+	const track_id = store.track_id
+	console.log(track_id, player_id)
+
 	
 	// const race = TODO - invoke the API call to create the race, then save the result
 
@@ -247,7 +251,7 @@ function renderRaceStartView(track, racers) {
 			<section id="accelerate">
 				<h2>Directions</h2>
 				<p>Click the button as fast as you can to make your racer go faster!</p>
-				<button id="gas-peddle">Click Me To Win!</button>
+				<button id="gas-peddle">Click Me Rapidly To Win!</button>
 			</section>
 		</main>
 		<footer></footer>
