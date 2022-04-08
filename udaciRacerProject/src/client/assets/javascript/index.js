@@ -78,9 +78,6 @@ function updateStore(state, newState) {
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
 	
-	
-
-
 	// TODO - Get player_id and track_id from the store
 	const player_id = store.player_id
 	const track_id = store.track_id
@@ -107,8 +104,9 @@ async function handleCreateRace() {
 	// TODO - call the async function runCountdown
 	runCountdown()
 	// TODO - call the async function startRace
-
+	startRace(store.race_id)
 	// TODO - call the async function runRace
+	runRace(store.race_id)
 }
 
 function runRace(raceID) {
@@ -150,8 +148,6 @@ async function runCountdown() {
 					resolve(Promise)
 				}
 				}, 1000)
-
-
 		})
 	} catch(error) {
 		console.log(error);
