@@ -97,7 +97,7 @@ async function handleCreateRace() {
 	console.log(store)
 
 	// render starting UI
-	renderAt('#race', renderRaceStartView(track_id, player_id))
+	renderAt('#race', renderRaceStartView(race.track))
 
 	
 	// The race has been created, now start the countdown
@@ -114,7 +114,7 @@ function runRace(raceID) {
 	// TODO - use Javascript's built in setInterval method to get race info every 500ms
 		const raceInfo = setInterval(async () =>{
 			
-			await console.log(raceProgress().status)
+			await getRace(raceID)
 
 		}, 500)
 
