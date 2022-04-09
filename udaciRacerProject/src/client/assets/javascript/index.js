@@ -93,8 +93,8 @@ async function handleCreateRace() {
 	updateStore(store, {race_id: parseInt(race.ID - 1)})
 	console.log(race)
 	console.log(race.ID)
-	console.log(store.race_id)
-	console.log(store)
+	// console.log(store.race_id)
+	// console.log(store)
 
 	// render starting UI
 	renderAt('#race', renderRaceStartView(race.track))
