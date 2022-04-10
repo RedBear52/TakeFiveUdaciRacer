@@ -151,7 +151,7 @@ function runRace(raceID) {
 					} else if (raceStatus.status === 'finished') {
 						console.log(raceStatus.status)
 						clearInterval(raceUpdates) // to stop the interval from repeating
-						renderAt('#race', resultsView(racerPos[store.player_id - 1])) // to render the results view
+						renderAt('#race', resultsView(racerPos)) // to render the results view
 						resolve(raceStatus) // resolve the promise
 					}
 				}, 500)
