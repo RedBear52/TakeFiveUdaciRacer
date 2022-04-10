@@ -7,6 +7,21 @@ let store = {
 	race_id: undefined,
 }
 
+const trackNames = {
+	'Track 1': 'Alabama Getaway',
+	'Track 2': 'Melba Cup',
+	'Track 3': 'Magic Valley',
+	'Track 4': 'White Lightning',
+	'Track 5': 'The Grand Tour'
+}
+
+const racerNames = {
+	'Racer 1': 'Pride',
+	'Racer 2': 'Heartache',
+	'Racer 3': 'Tears',
+	'Racer 4': 'My Heart',
+	'Racer 5': 'True Love'
+}
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
 	onPageLoad()
@@ -77,56 +92,68 @@ function updateStore(state, newState) {
 }
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
+	try {
+		// TODO - Get player_id and track_id from the store
+		const player_id = store.player_id
+		const track_id = store.track_id
+		console.log(track_id, player_id)
+
+
+		// const race = TODO - invoke the API call to create the race, then save the result
+		const race = await createRace(player_id, track_id)
+
+		// TODO - update the store with the race id
+		// For the API to work properly, the race id should be race id - 1
+		updateStore(store, {race_id: parseInt(race.ID - 1)})
+		console.log(race)
+		console.log(race.ID)
+		console.log(store.race_id)
+		console.log(store)
+
+		// render starting UI
+		renderAt('#race', renderRaceStartView(race))
+
+		
+		// The race has been created, now start the countdown
+		// TODO - call the async function runCountdown
+		await runCountdown()
+		// TODO - call the async function startRace
+		await startRace(store.race_id)
+		// TODO - call the async function runRace
+		await runRace(store.race_id)
+	} catch (err) {
+		console.log('There has been an error!')
+	}
 	
-	// TODO - Get player_id and track_id from the store
-	const player_id = store.player_id
-	const track_id = store.track_id
-	console.log(track_id, player_id)
-
-
-	// const race = TODO - invoke the API call to create the race, then save the result
-	const race = await createRace(player_id, track_id)
-
-
-	// TODO - update the store with the race id
-	// For the API to work properly, the race id should be race id - 1
-	updateStore(store, {race_id: parseInt(race.ID - 1)})
-	console.log(race)
-	console.log(race.ID)
-	// console.log(store.race_id)
-	// console.log(store)
-
-	// render starting UI
-	renderAt('#race', renderRaceStartView(race.track))
-
-	
-	// The race has been created, now start the countdown
-	// TODO - call the async function runCountdown
-	runCountdown()
-	// TODO - call the async function startRace
-	startRace(store.race_id)
-	// TODO - call the async function runRace
-	runRace(store.race_id)
 }
 
 function runRace(raceID) {
-	return new Promise(resolve => {
-	
-	/* 
-		TODO - if the race info status property is "in-progress", update the leaderboard by calling:
-
-		renderAt('#leaderBoard', raceProgress(res.positions))
-	*/
-
-	/* 
-		TODO - if the race info status property is "finished", run the following:
-
-		clearInterval(raceInterval) // to stop the interval from repeating
-		renderAt('#race', resultsView(res.positions)) // to render the results view
-		reslove(res) // resolve the promise
-	*/
-	})
-	// remember to add error handling for the Promise
+	try {
+		return new Promise(resolve => {
+			// TODO - use Javascript's built in setINterval method to get race info every 500ms
+			// TODO - if the race info status property is "in-progress", update the leaderboard by calling:
+			// 	renderAt('#leaderBoard', raceProgress(res.positions))
+				const raceUpdates = setInterval(async () => {
+					const raceStatus = await getRace(raceID)
+			// TODO - if the race info status property is "finished", run the following:
+			// clearInterval(raceInterval) 
+			// renderAt('#race', resultsView(res.positions)) 
+			// reslove(res) 
+					if (raceStatus.status == 'in-progress') {
+						renderAt('#leaderBoard', raceProgress(raceStatus.positions))
+						console.log(raceStatus.status)
+					} else if (raceStatus.status == 'finished') {
+						console.log(raceStatus.finished)
+						clearInterval(raceUpdates) // to stop the interval from repeating
+						renderAt('#race', resultsView(raceStatus.positions)) // to render the results view
+						resolve(raceStatus) // resolve the promise
+					}
+				}, 500)
+			})
+	} catch(err) {
+		// remember to add error handling for the Promise
+		console.log('Problem with runRace()' + err)
+	}
 }
 
 async function runCountdown() {
@@ -254,10 +281,10 @@ function renderCountdown(count) {
 	`
 }
 
-function renderRaceStartView(track, racers) {
+function renderRaceStartView(track) {
 	return `
 		<header>
-			<h1>Race: ${track}</h1>
+			<h1>Race: ${track.Track.name}</h1>
 		</header>
 		<main id="two-columns">
 			<section id="leaderBoard">
