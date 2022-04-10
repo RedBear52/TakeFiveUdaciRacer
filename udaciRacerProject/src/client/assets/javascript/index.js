@@ -7,21 +7,21 @@ let store = {
 	race_id: undefined,
 }
 
-const trackNames = {
-	'Track 1': 'Alabama Getaway',
-	'Track 2': 'Melba Cup',
-	'Track 3': 'Magic Valley',
-	'Track 4': 'White Lightning',
-	'Track 5': 'The Grand Tour'
-}
+// const trackNames = {
+// 	'Track 1': 'Alabama Getaway',
+// 	'Track 2': 'Melba Cup',
+// 	'Track 3': 'Magic Valley',
+// 	'Track 4': 'White Lightning',
+// 	'Track 5': 'The Grand Tour'
+// }
 
-const racerNames = {
-	'Racer 1': 'Pride',
-	'Racer 2': 'Heartache',
-	'Racer 3': 'Tears',
-	'Racer 4': 'My Heart',
-	'Racer 5': 'True Love'
-}
+// const racerNames = {
+// 	'Racer 1': 'Pride',
+// 	'Racer 2': 'Heartache',
+// 	'Racer 3': 'Tears',
+// 	'Racer 4': 'My Heart',
+// 	'Racer 5': 'True Love'
+// }
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
 	onPageLoad()
@@ -225,6 +225,8 @@ function handleSelectTrack(target) {
 function handleAccelerate() {
 	console.log("accelerate button clicked")
 	// TODO - Invoke the API call to accelerate
+	// eventHandler/Listener?
+	return accelerate(store.race_id)
 }
 
 // HTML VIEWS ------------------------------------------------
