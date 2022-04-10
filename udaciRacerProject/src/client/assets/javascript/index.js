@@ -328,11 +328,12 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {
-	let userPlayer = positions.find(e => e.id === store.player_id)
+	                                        //   '+' is shorthand for parseInt()! 
+	let userPlayer = positions.find(e => e.id === +store.player_id)
 	// userPlayer.driver_name += " (you)"
 	console.log(positions)
 	console.log(store.player_id)
-	// userPlayer.driver_namer
+	// userPlayer.driver_name
 	console.log(userPlayer)
 	//  += " (you)"
 
