@@ -59,6 +59,7 @@ function setupClickHandlers() {
 		// Podracer form field
 		if (target.matches('.card.podracer')) {
 			handleSelectPodRacer(target)
+			console.log(target)
 		}
 
 		// Submit create race form
@@ -193,6 +194,10 @@ function handleSelectPodRacer(target) {
 	target.classList.add('selected')
 
 	// TODO - save the selected racer to the store
+	// updateStore(store, {racer_id: activelySelectedRacer})
+	// console.log(activelySelectedRacer)
+	updateStore(store, {player_id: target.id})
+	console.log(store.player_id)
 }
 
 function handleSelectTrack(target) {
