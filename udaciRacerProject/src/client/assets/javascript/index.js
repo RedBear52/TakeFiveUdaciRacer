@@ -296,7 +296,7 @@ function renderCountdown(count) {
 		<p id="big-numbers">${count}</p>
 	`
 }
-
+git
 function renderRaceStartView(track, racers) {
 	console.log(track.name)
 	return `
