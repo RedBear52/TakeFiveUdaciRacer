@@ -113,7 +113,7 @@ async function handleCreateRace() {
 		console.log(race.Track, race.Cars)
 
 		// render starting UI
-		renderAt('#race', renderRaceStartView(race.Track, race.Cars))
+		renderAt('#race', renderRaceStartView(race.Track))
 		
 		// The race has been created, now start the countdown
 		// TODO - call the async function runCountdown
@@ -212,14 +212,16 @@ function handleSelectTrack(target) {
 	const selected = document.querySelector('#tracks .selected')
 	if(selected) {
 		selected.classList.remove('selected')
-	}
 
-	// add class selected to current target
+		// add class selected to current target
 	target.classList.add('selected')
 
 	// TODO - save the selected track id to the store
 	updateStore(store, {track_id: target.id})
 	console.log(store.track_id)
+	}
+	// else error ???
+	
 }
 
 function handleAccelerate() {
@@ -279,6 +281,7 @@ function renderTrackCards(tracks) {
 
 function renderTrackCard(track, racers) {
 	const { id, name } = track
+	console.log(id, name)
 
 	return `
 		<li id="${id}" class="card track">
