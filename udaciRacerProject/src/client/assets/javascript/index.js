@@ -312,34 +312,42 @@ function resultsView(positions) {
 }
 // ---------------------GET THE YOU THING GOING  ... OR ... JUST USE STYLING ?!---
 function raceProgress(positions) {  
-	// let userPlayer = positions.find(e => e.id === +store.player_id)
+	const userPlayer = positions.find(e => e.id == +store.player_id)
 	// userPlayer.driver_name += " (you)"
 	// console.log(positions)
-	// console.log(store.player_id)
-	// // userPlayer.driver_name
-	// console.log(userPlayer)
-	//  += " (you)"-----------------------------------------------------
+	console.log(store.player_id)
+	console.log(userPlayer.driver_name)
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
 	const results = positions.map(p => {
-		return `
-			<tr>
-				<td>
-					<h3>${count++} - ${customRacerNames[p.driver_name]}</h3>
-				</td>
-			</tr>
-		`
+		if (userPlayer.driver_name == p.driver_name) {
+			return `
+				<tr>
+					<td>
+						<h3>${count++} - ${customRacerNames[userPlayer.driver_name]} YOU</h3>
+					</td>
+				</tr>
+			`
+		} else {
+			return `
+				<tr>
+					<td>
+						<h3>${count++} - ${customRacerNames[p.driver_name]}</h3>
+					</td>
+				</tr>
+			`
+		}
 	}) 
 
-	return `
-		<main>
-			<h3>Leaderboard</h3>
-			<section id="leaderBoard">
-				${results}
-			</section>
-		</main>
-	`
+		return `
+			<main>
+				<h3>Leaderboard</h3>
+				<section id="leaderBoard">
+					${results}
+				</section>
+			</main>
+		`
 }
 
 function renderAt(element, html) {
@@ -421,4 +429,3 @@ function accelerate(id) {
     })
     .catch(err => console.log("Problem with accelerate request::", err))
 }
-
