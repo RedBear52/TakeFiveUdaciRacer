@@ -178,42 +178,37 @@ function handleSelectPodRacer(target) {
 	const selected = document.querySelector('#racers .selected')
 	if(selected) {
 		selected.classList.remove('selected')
-	}
+	} 
 	// add class selected to current target
 	target.classList.add('selected')
-
 	// Saving selected racer to the store
 	updateStore(store, {player_id: target.id})
-	console.log(store.player_id)
 }
 
 function handleSelectTrack(target) {
 	console.log("selected a track", target.id)
-
 	// remove class selected from all track options
 	const selected = document.querySelector('#tracks .selected')
 	if (selected) {
 		selected.classList.remove('selected')
 	}
-		// add class selected to current target
+	// add class selected to current target
 	target.classList.add('selected')
-
-	// TODO - save the selected track id to the store
+	// Save the selected track id to the store
 	updateStore(store, {track_id: target.id})
-	console.log(store.track_id)
 	}
-	// else error ???
-
 
 function handleAccelerate() {
 	console.log("accelerate button clicked")
-	// TODO - Invoke the API call to accelerate
-	// eventHandler/Listener?
-	return accelerate(store.race_id)
+	// Invoking API call to accelrate racer based on button clicks
+	try {
+		accelerate(store.race_id)
+	} catch (err) {
+		console.log('Problem with handleAccelerate()', err)
+	}
 }
 
-// HTML VIEWS ------------------------------------------------
-// Provided code - do not remove
+// ------------------HTML VIEWS ---------------------
 
 function renderRacerCars(racers) {
 	if (!racers.length) {
@@ -262,7 +257,6 @@ function renderTrackCards(tracks) {
 
 function renderTrackCard(track, racers) {
 	const { id, name } = track
-	console.log(track.name, track.id)
 
 	return `
 		<li id="${id}" class="card track">
@@ -272,16 +266,18 @@ function renderTrackCard(track, racers) {
 }
 
 function renderCountdown(count) {
+
 	return `
 		<h2>Race Starts In...</h2>
 		<p id="big-numbers">${count}</p>
 	`
 }
 
-function renderRaceStartView(track, racers) {
+function renderRaceStartView(track) {
 	const { id, name } = track
-	console.log(track)
+
 	let index = `Track ${track}`
+
 	return `
 		<header>
 			<h1>Race: ${customTrackNames[index]}</h1>
@@ -314,7 +310,7 @@ function resultsView(positions) {
 		</main>
 	`
 }
-
+// ---------------------GET THE YOU THING GOING  ... OR ... JUST USE STYLING ?!---
 function raceProgress(positions) {  
 	// let userPlayer = positions.find(e => e.id === +store.player_id)
 	// userPlayer.driver_name += " (you)"
@@ -322,7 +318,7 @@ function raceProgress(positions) {
 	// console.log(store.player_id)
 	// // userPlayer.driver_name
 	// console.log(userPlayer)
-	//  += " (you)"
+	//  += " (you)"-----------------------------------------------------
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
@@ -351,9 +347,6 @@ function renderAt(element, html) {
 
 	node.innerHTML = html
 }
-
-// ^ Provided code ^ do not remove
-
 
 // API CALLS ------------------------------------------------
 
@@ -393,8 +386,7 @@ function createRace(player_id, track_id) {
     player_id = +player_id
     track_id = +track_id
     const body = { player_id, track_id }
-	console.log(track_id)
-    
+
     return fetch(`${SERVER}/api/races`, {
         method: 'POST',
         ...defaultFetchOpts(),
