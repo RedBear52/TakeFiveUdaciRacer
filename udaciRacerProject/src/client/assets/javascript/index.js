@@ -1,5 +1,7 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 
+//CoderNote: a '+' operator attached to the front of a variable is shorthand for parseInt()!
+
 // The store will hold all information needed globally
 let store = {
 	track_id: undefined,
@@ -13,7 +15,7 @@ const customTrackNames = {
 	'Track 3': 'Magic Valley',
 	'Track 4': 'White Lightning',
 	'Track 5': 'The Grand Tour',
-	'Track 6': 'The Lawnmower Classic'
+	'Track 6': 'The Lawnmower Classic',
 }
 
 const customRacerNames = {
@@ -21,8 +23,9 @@ const customRacerNames = {
 	'Racer 2': 'Heartache',
 	'Racer 3': 'Tears',
 	'Racer 4': 'My Heart',
-	'Racer 5': 'True Love'
+	'Racer 5': 'True Love',
 }
+
 // We need our javascript to wait until the DOM is loaded
 document.addEventListener("DOMContentLoaded", function() {
 	onPageLoad()
@@ -34,14 +37,12 @@ async function onPageLoad() {
 		getTracks()
 			.then(tracks => {
 				const html = renderTrackCards(tracks)
-				console.log(html)
 				renderAt('#tracks', html)
 			})
 
 		getRacers()
 			.then((racers) => {
 				const html = renderRacerCars(racers)
-				console.log(racers)
 				renderAt('#racers', html)
 			})
 	} catch(error) {
@@ -102,59 +103,40 @@ async function handleCreateRace() {
 		// TODO - Get player_id and track_id from the store
 		const player_id = store.player_id
 		const track_id = store.track_id
-		console.log(`track id: ${track_id}  player id: ${player_id}`)
 
-		
 		// const race = TODO - invoke the API call to create the race, then save the result
 		const race = await createRace(player_id, track_id)
-		console.log(race)
-		// TODO - update the store with the race id
-		// For the API to work properly, the race id should be race id - 1
+
+		// Updates the store with the race id
+		// Compensating for API bug with: race id - 1
 		updateStore(store, {race_id: parseInt(race.ID - 1)})
-		console.log(race)
-		console.log(race.ID)
-		console.log(store.race_id)
-		console.log(store)
-		console.log(race.Track, race.Cars)
 
 		// render starting UI
 		renderAt('#race', renderRaceStartView(track_id, player_id))
 		
-		// The race has been created, now start the countdown
-		// TODO - call the async function runCountdown
+		// start the countdown by calling the async function runCountdown
 		await runCountdown()
-		// TODO - call the async function startRace
+		// Calls the async function startRace
 		await startRace(store.race_id)
-		// TODO - call the async function runRace
+		// Calls the async function runRace
 		await runRace(store.race_id)
 	} catch (err) {
 		console.log('There has been an error! ::', err)
 	}
-	
 }
 
 function runRace(raceID) {
 	try {
 		return new Promise(resolve => {
-			// TODO - use Javascript's built in setINterval method to get race info every 500ms
-			// TODO - if the race info status property is "in-progress", update the leaderboard by calling:
-			// 	renderAt('#leaderBoard', raceProgress(res.positions))
+				// Using JS's built in setInterval() to get race info update every 500ms
 				const raceUpdates = setInterval(async () => {
-					const raceStatus = await getRace(raceID)
-					const racerPos = raceStatus.positions
-			// TODO - if the race info status property is "finished", run the following:
-			// clearInterval(raceInterval) 
-			// renderAt('#race', resultsView(res.positions)) 
-			// reslove(res) 
-				console.log(raceStatus.status)
-				console.log(racerPos)
-				console.log(racerPos[store.player_id - 1].driver_name)
-
+				const raceStatus = await getRace(raceID)
+				const racerPos = raceStatus.positions
+				// Conditional logic to manage rendering functionality based on whether the race status is
+				// 'in progress' or 'finished'
 					if (raceStatus.status === 'in-progress') {
 						renderAt('#leaderBoard', raceProgress(racerPos))
-						console.log(raceStatus.status)
 					} else if (raceStatus.status === 'finished') {
-						console.log(raceStatus.status)
 						clearInterval(raceUpdates) // to stop the interval from repeating
 						renderAt('#race', resultsView(racerPos)) // to render the results view
 						resolve(raceStatus) // resolve the promise
@@ -162,7 +144,6 @@ function runRace(raceID) {
 				}, 500)
 			})
 	} catch(err) {
-		// remember to add error handling for the Promise
 		console.log('Problem with runRace()' + err)
 	}
 }
@@ -186,27 +167,22 @@ async function runCountdown() {
 				}
 				}, 1000)
 		})
-	} catch(error) {
-		console.log(error);
+	} catch(err) {
+		console.log('Problem with runCountdown():', err)
 	}
 }
 
 function handleSelectPodRacer(target) {
 	console.log("selected a pod", target.id)
-	console.log(target)
-
-	// remove class selected from all racer options
+	// remove class selected from all extant racer options
 	const selected = document.querySelector('#racers .selected')
 	if(selected) {
 		selected.classList.remove('selected')
 	}
-
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// TODO - save the selected racer to the store
-	// updateStore(store, {racer_id: activelySelectedRacer})
-	// console.log(activelySelectedRacer)
+	// Saving selected racer to the store
 	updateStore(store, {player_id: target.id})
 	console.log(store.player_id)
 }
@@ -339,19 +315,17 @@ function resultsView(positions) {
 	`
 }
 
-function raceProgress(positions) {
-	                                        //   '+' is shorthand for parseInt()! 
-	let userPlayer = positions.find(e => e.id === +store.player_id)
+function raceProgress(positions) {  
+	// let userPlayer = positions.find(e => e.id === +store.player_id)
 	// userPlayer.driver_name += " (you)"
-	console.log(positions)
-	console.log(store.player_id)
-	// userPlayer.driver_name
-	console.log(userPlayer)
+	// console.log(positions)
+	// console.log(store.player_id)
+	// // userPlayer.driver_name
+	// console.log(userPlayer)
 	//  += " (you)"
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
-
 	const results = positions.map(p => {
 		return `
 			<tr>
@@ -360,7 +334,7 @@ function raceProgress(positions) {
 				</td>
 			</tr>
 		`
-	})
+	}) 
 
 	return `
 		<main>
