@@ -7,15 +7,16 @@ let store = {
 	race_id: undefined,
 }
 
-const trackNames = {
+const customTrackNames = {
 	'Track 1': 'Alabama Getaway',
 	'Track 2': 'Melba Cup',
 	'Track 3': 'Magic Valley',
 	'Track 4': 'White Lightning',
-	'Track 5': 'The Grand Tour'
+	'Track 5': 'The Grand Tour',
+	'Track 6': 'The Lawnmower Classic'
 }
 
-const racerNames = {
+const customRacerNames = {
 	'Racer 1': 'Pride',
 	'Racer 2': 'Heartache',
 	'Racer 3': 'Tears',
@@ -33,12 +34,14 @@ async function onPageLoad() {
 		getTracks()
 			.then(tracks => {
 				const html = renderTrackCards(tracks)
+				console.log(html)
 				renderAt('#tracks', html)
 			})
 
 		getRacers()
 			.then((racers) => {
 				const html = renderRacerCars(racers)
+				console.log(racers)
 				renderAt('#racers', html)
 			})
 	} catch(error) {
@@ -54,6 +57,8 @@ function setupClickHandlers() {
 		// Race track form field
 		if (target.matches('.card.track')) {
 			handleSelectTrack(target)
+			console.log(target)
+
 		}
 
 		// Podracer form field
@@ -99,10 +104,10 @@ async function handleCreateRace() {
 		const track_id = store.track_id
 		console.log(`track id: ${track_id}  player id: ${player_id}`)
 
-
+		
 		// const race = TODO - invoke the API call to create the race, then save the result
 		const race = await createRace(player_id, track_id)
-
+		console.log(race)
 		// TODO - update the store with the race id
 		// For the API to work properly, the race id should be race id - 1
 		updateStore(store, {race_id: parseInt(race.ID - 1)})
@@ -113,7 +118,7 @@ async function handleCreateRace() {
 		console.log(race.Track, race.Cars)
 
 		// render starting UI
-		renderAt('#race', renderRaceStartView(race.Track))
+		renderAt('#race', renderRaceStartView(track_id, player_id))
 		
 		// The race has been created, now start the countdown
 		// TODO - call the async function runCountdown
@@ -188,6 +193,7 @@ async function runCountdown() {
 
 function handleSelectPodRacer(target) {
 	console.log("selected a pod", target.id)
+	console.log(target)
 
 	// remove class selected from all racer options
 	const selected = document.querySelector('#racers .selected')
@@ -210,9 +216,9 @@ function handleSelectTrack(target) {
 
 	// remove class selected from all track options
 	const selected = document.querySelector('#tracks .selected')
-	if(selected) {
+	if (selected) {
 		selected.classList.remove('selected')
-
+	}
 		// add class selected to current target
 	target.classList.add('selected')
 
@@ -221,8 +227,7 @@ function handleSelectTrack(target) {
 	console.log(store.track_id)
 	}
 	// else error ???
-	
-}
+
 
 function handleAccelerate() {
 	console.log("accelerate button clicked")
@@ -255,10 +260,10 @@ function renderRacerCard(racer) {
 
 	return `
 		<li class="card podracer" id="${id}">
-			<h3>${driver_name}</h3>
-			<p>${top_speed}</p>
-			<p>${acceleration}</p>
-			<p>${handling}</p>
+			<h3>${customRacerNames[driver_name]}</h3>
+			<p>${`Top Speed: ${top_speed}`}</p>
+			<p>${`Acceleration: ${acceleration}`}</p>
+			<p>${`Handling: ${handling}`}</p>
 		</li>
 	`
 }
@@ -281,11 +286,11 @@ function renderTrackCards(tracks) {
 
 function renderTrackCard(track, racers) {
 	const { id, name } = track
-	console.log(id, name)
+	console.log(track.name, track.id)
 
 	return `
 		<li id="${id}" class="card track">
-			<h3>${name}</h3>
+			<h3>${customTrackNames[name]}</h3>
 		</li>
 	`
 }
@@ -296,12 +301,14 @@ function renderCountdown(count) {
 		<p id="big-numbers">${count}</p>
 	`
 }
-git
+
 function renderRaceStartView(track, racers) {
-	console.log(track.name)
+	const { id, name } = track
+	console.log(track)
+	let index = `Track ${track}`
 	return `
 		<header>
-			<h1>Race: ${track.name}</h1>
+			<h1>Race: ${customTrackNames[index]}</h1>
 		</header>
 		<main id="two-columns">
 			<section id="leaderBoard">
@@ -349,7 +356,7 @@ function raceProgress(positions) {
 		return `
 			<tr>
 				<td>
-					<h3>${count++} - ${p.driver_name}</h3>
+					<h3>${count++} - ${customRacerNames[p.driver_name]}</h3>
 				</td>
 			</tr>
 		`
@@ -409,8 +416,8 @@ function getRacers() {
 }
 
 function createRace(player_id, track_id) {
-    player_id = parseInt(player_id)
-    track_id = parseInt(track_id)
+    player_id = +player_id
+    track_id = +track_id
     const body = { player_id, track_id }
 	console.log(track_id)
     
