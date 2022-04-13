@@ -13,7 +13,7 @@ const customTrackNames = {
 	'Track 3': 'Magic Valley',
 	'Track 4': 'White Lightning',
 	'Track 5': 'The Grand Tour',
-	'Track 6': 'The John Deere Classic',
+	'Track 6': 'The John Deere Classic'
 }
 
 const customRacerNames = {
@@ -21,7 +21,7 @@ const customRacerNames = {
 	'Racer 2': 'Heartache',
 	'Racer 3': 'Tears',
 	'Racer 4': 'My Heart',
-	'Racer 5': 'True Love',
+	'Racer 5': 'True Love'
 }
 
 // We need our javascript to wait until the DOM is loaded
@@ -216,7 +216,7 @@ function renderRacerCars(racers) {
 	}
 
 	const results = racers.map(renderRacerCard).join('')
-
+	console.log(racers)
 	return `
 		<ul id="racers">
 			${results}
@@ -245,7 +245,7 @@ function renderTrackCards(tracks) {
 	}
 
 	const results = tracks.map(renderTrackCard).join('')
-
+	console.log(results)
 	return `
 		<ul id="tracks">
 			${results}
@@ -310,15 +310,17 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {  
-	const userPlayer = positions.find(e => e.id == +store.player_id)
+	const userPlayer = positions.find(e => e.id === +store.player_id)
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
+	
 	const results = positions.map(p => {
-		if (userPlayer.driver_name == p.driver_name) {
+		if (userPlayer.driver_name === p.driver_name) {
 			return `
 				<tr>
 					<td>
-						<h3>${count++} - ${customRacerNames[userPlayer.driver_name]} YOU</h3>
+			console.log(count)
+			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]} YOU</h3>
 					</td>
 				</tr>
 			`
