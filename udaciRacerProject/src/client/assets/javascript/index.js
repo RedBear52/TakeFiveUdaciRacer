@@ -13,7 +13,7 @@ const customTrackNames = {
 	'Track 3': 'Magic Valley',
 	'Track 4': 'White Lightning',
 	'Track 5': 'The Grand Tour',
-	'Track 6': 'The Lawnmower Classic',
+	'Track 6': 'The John Deere Classic',
 }
 
 const customRacerNames = {
@@ -278,7 +278,7 @@ function renderRaceStartView(track) {
 
 	return `
 		<header>
-			<h1>Race: ${customTrackNames[index]}</h1>
+			<h1>Today's Race:   ${customTrackNames[index]}</h1>
 		</header>
 		<main id="two-columns">
 			<section id="leaderBoard">
@@ -288,7 +288,7 @@ function renderRaceStartView(track) {
 			<section id="accelerate">
 				<h2>Directions</h2>
 				<p>Click the button as fast as you can to make your racer go faster!</p>
-				<button id="gas-peddle">Click Me Rapidly To Win!</button>
+				<button id="gas-peddle" onmousedown="changeButtonColor('steelblue');" onmouseup="changeBack('#ffd400');">Click Me Rapidly To Win!</button>
 			</section>
 		</main>
 		<footer></footer>
@@ -348,6 +348,16 @@ function renderAt(element, html) {
 
 	node.innerHTML = html
 }
+
+function changeButtonColor(color, reversion) {
+	pedalButton = document.getElementById('gas-peddle');
+	pedalButton.style.background = color;
+ }
+
+ function changeBack(color, reversion) {
+	pedalButton = document.getElementById('gas-peddle');
+	pedalButton.style.background = color;
+ }
 
 // API CALLS ------------------------------------------------
 

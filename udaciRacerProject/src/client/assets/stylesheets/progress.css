@@ -2,7 +2,9 @@
 
 /* -------------------  MOBILE  --------------------- */
 header {
-  background-image: url('https://via.placeholder.com/1150');
+  font-size: 1em;
+  background-image: url('../images/checkered_flag_bookends.png');
+
 }
 
 main#two-columns {
@@ -15,13 +17,19 @@ main#two-columns section {
 }
 
 section#accelerate button {
+    font-size: 1.5em;
     height: 300px;
     width: 300px;
     margin: 30px auto;
     border-radius: 180%;
-    background-color: green;
-    border-color: rgb(14, 166, 6);
+    background-color: #ffd400;
+    border-color: black;
     cursor: pointer;
+}
+
+section#accelerate button:hover {
+    border: 1.5em; 
+    border-color: steelblue;
 }
 
 #big-numbers {

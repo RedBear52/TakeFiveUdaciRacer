@@ -16,12 +16,14 @@ form li {
 }
 
 form li:hover {
-    box-shadow: none;
-    border: 1px solid rgb(109, 233, 23);
+    box-shadow: 5px 7px 5px 0px #ffd400;
+    border: 3px solid #ffd400;
 }
 
 form li.selected {
-    border: 1px solid rgb(109, 233, 23);
+    border: 1px solid #ffd400;
+    color: #ffd400;
+    border: 1em solid #ffd400;
 }
 
 form li h3 {
