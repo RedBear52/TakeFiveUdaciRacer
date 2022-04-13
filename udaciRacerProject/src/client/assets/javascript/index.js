@@ -1,7 +1,5 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 
-//CoderNote: a '+' operator attached to the front of a variable is shorthand for parseInt()!
-
 // The store will hold all information needed globally
 let store = {
 	track_id: undefined,
@@ -104,17 +102,17 @@ async function handleCreateRace() {
 		const player_id = store.player_id
 		const track_id = store.track_id
 
-		// const race = TODO - invoke the API call to create the race, then save the result
+		// Invoking the API call to create the race, then save the result
 		const race = await createRace(player_id, track_id)
 
 		// Updates the store with the race id
 		// Compensating for API bug with: race id - 1
-		updateStore(store, {race_id: parseInt(race.ID - 1)})
+		updateStore(store, {race_id: +race.ID - 1})
 
 		// render starting UI
 		renderAt('#race', renderRaceStartView(track_id, player_id))
 		
-		// start the countdown by calling the async function runCountdown
+		// starts the countdown by calling the async function runCountdown
 		await runCountdown()
 		// Calls the async function startRace
 		await startRace(store.race_id)
@@ -155,9 +153,9 @@ async function runCountdown() {
 		let timer = 3
 
 		return new Promise(resolve => {
-			// TODO - use Javascript's built in setInterval method to count down once per second
-			// run this DOM manipulation to decrement the countdown for the user
-			// TODO - if the countdown is done, clear the interval, resolve the promise, and return
+			// Using Javascript's built in setInterval method to count down once per second
+			// Conditional logic determines if countdown is done, then:
+			// clear the interval, resolve the promise, and return
 			const countdownInterval = setInterval(() => { 
 				if (timer > 0) {
 				document.getElementById('big-numbers').innerHTML = --timer
@@ -200,7 +198,7 @@ function handleSelectTrack(target) {
 
 function handleAccelerate() {
 	console.log("accelerate button clicked")
-	// Invoking API call to accelrate racer based on button clicks
+	// Invoking API call to accelrate racer based on button clicks per track segment
 	try {
 		accelerate(store.race_id)
 	} catch (err) {
@@ -310,7 +308,7 @@ function resultsView(positions) {
 		</main>
 	`
 }
-// ---------------------GET THE YOU THING GOING  ... OR ... JUST USE STYLING ?!---
+
 function raceProgress(positions) {  
 	const userPlayer = positions.find(e => e.id == +store.player_id)
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
