@@ -14,27 +14,38 @@
 }
 
 body {
+  font-family: 'Fjalla One', sans-serif;
+  font-family: 'Shadows Into Light', cursive;
   display: flex;
   flex-direction: column;
   font-family: Arial;
   min-height: 100vh;
 }
 
+#header-text-prepend {
+  font-size: 5em;
+  margin: .25em;
+}
+
 header {
-  background-image: url('https://via.placeholder.com/1150');
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 1.5em;
+  letter-spacing: 0.02em;
+  background-image: url('../images/george_blank_flag.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 100%;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 h1 {
-  color: white;
+  color: black;
   text-shadow: 3px 2px hsl(0, 2%, 51%);
-  font-size: 70px;
+  font-size: 10em;
   text-transform: uppercase;
 }
 
