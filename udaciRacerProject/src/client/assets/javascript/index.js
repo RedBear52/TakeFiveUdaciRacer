@@ -313,11 +313,6 @@ function resultsView(positions) {
 // ---------------------GET THE YOU THING GOING  ... OR ... JUST USE STYLING ?!---
 function raceProgress(positions) {  
 	const userPlayer = positions.find(e => e.id == +store.player_id)
-	// userPlayer.driver_name += " (you)"
-	// console.log(positions)
-	console.log(store.player_id)
-	console.log(userPlayer.driver_name)
-
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
 	const results = positions.map(p => {
