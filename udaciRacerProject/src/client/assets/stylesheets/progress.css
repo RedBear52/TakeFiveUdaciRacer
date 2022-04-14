@@ -16,6 +16,30 @@ main#two-columns section {
     max-width: 50vw;
 }
 
+#results-board {
+    /* background-color: pink; */
+    display: inline-block;
+    text-align: left;
+}
+
+#play-again-link {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 2em;
+    /* background-color: aquamarine; */
+    text-align: center;
+}
+
+#start-race-button {
+    text-align: center;
+}
+
+.leader-board {
+    /* background-color: lightsalmon; */
+    text-align: center;
+    
+
+}
+
 section#accelerate button {
     font-size: 1.5em;
     height: 300px;

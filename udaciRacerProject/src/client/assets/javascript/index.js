@@ -56,14 +56,11 @@ function setupClickHandlers() {
 		// Race track form field
 		if (target.matches('.card.track')) {
 			handleSelectTrack(target)
-			console.log(target)
-
 		}
 
 		// Podracer form field
 		if (target.matches('.card.podracer')) {
 			handleSelectPodRacer(target)
-			console.log(target)
 		}
 
 		// Submit create race form
@@ -215,7 +212,7 @@ function renderRacerCars(racers) {
 		`
 	}
 
-	const results = racers.map(renderRacerCard).join('')
+	const results = racers.map(renderRacerCard)
 	console.log(racers)
 	return `
 		<ul id="racers">
@@ -244,7 +241,7 @@ function renderTrackCards(tracks) {
 		`
 	}
 
-	const results = tracks.map(renderTrackCard).join('')
+	const results = tracks.map(renderTrackCard)
 	console.log(results)
 	return `
 		<ul id="tracks">
@@ -278,7 +275,7 @@ function renderRaceStartView(track) {
 
 	return `
 		<header>
-			<h1>Today's Race:   ${customTrackNames[index]}</h1>
+			<h1>Track:   ${customTrackNames[index]}</h1>
 		</header>
 		<main id="two-columns">
 			<section id="leaderBoard">
@@ -302,9 +299,9 @@ function resultsView(positions) {
 		<header>
 			<h1>Race Results</h1>
 		</header>
-		<main>
+		<main id="play-again-link">
 			${raceProgress(positions)}
-			<a href="/race">Start a new race</a>
+			<button class="button"><a href="/race">Start a new race</a></button>
 		</main>
 	`
 }
@@ -312,14 +309,13 @@ function resultsView(positions) {
 function raceProgress(positions) {  
 	const userPlayer = positions.find(e => e.id === +store.player_id)
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
-	let count = 1
+	let count = '1'
 	
 	const results = positions.map(p => {
 		if (userPlayer.driver_name === p.driver_name) {
 			return `
 				<tr>
 					<td>
-			console.log(count)
 			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]} YOU</h3>
 					</td>
 				</tr>
@@ -335,14 +331,14 @@ function raceProgress(positions) {
 		}
 	}) 
 
-		return `
-			<main>
-				<h3>Leaderboard</h3>
-				<section id="leaderBoard">
-					${results}
-				</section>
-			</main>
-		`
+	return `
+		<main class="leader-board">
+			<h3>Leader Board</h3>
+			<section id="results-board">
+				${results}
+			</section>
+		</main>
+	`
 }
 
 function renderAt(element, html) {
