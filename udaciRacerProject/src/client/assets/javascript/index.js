@@ -50,7 +50,7 @@ async function onPageLoad() {
 }
 
 function setupClickHandlers() {
-	document.addEventListener('click', function(event) {
+		document.addEventListener('click', function(event) {
 		let parent = event.target.parentElement
 
 		const { target } = event
@@ -99,9 +99,20 @@ function updateStore(state, newState) {
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
 	try {
-		// TODO - Get player_id and track_id from the store
+		// Gets player_id and track_id from the store
 		const player_id = store.player_id
 		const track_id = store.track_id
+
+		// alerts user that START RACE button won't work until RACER & TRACK are chosen
+		if (!track_id) {
+			alert("You must choose a track before starting your race!");
+			return;
+		  }
+	  
+		  if (!player_id) {
+			alert("You must choose a racing mower before starting your raace!");
+			return;
+		  }
 
 		// Invoking the API call to create the race, then save the result
 		const race = await createRace(player_id, track_id)
@@ -172,7 +183,6 @@ async function runCountdown() {
 }
 
 function handleSelectPodRacer(target) {
-	console.log("selected a pod", target.id)
 	// remove class selected from all extant racer options
 	const selected = document.querySelector('#racers .selected')
 	if(selected) {
@@ -185,7 +195,6 @@ function handleSelectPodRacer(target) {
 }
 
 function handleSelectTrack(target) {
-	console.log("selected a track", target.id)
 	// remove class selected from all track options
 	const selected = document.querySelector('#tracks .selected')
 	if (selected) {
@@ -198,7 +207,6 @@ function handleSelectTrack(target) {
 	}
 
 function handleAccelerate() {
-	console.log("accelerate button clicked")
 	// Invoking API call to accelrate racer based on button clicks per track segment
 	try {
 		accelerate(store.race_id)
@@ -217,7 +225,6 @@ function renderRacerCars(racers) {
 	}
 
 	const results = racers.map(renderRacerCard)
-	console.log(racers)
 	return `
 		<ul id="racers">
 			${results}
@@ -246,7 +253,6 @@ function renderTrackCards(tracks) {
 	}
 
 	const results = tracks.map(renderTrackCard)
-	console.log(results)
 	return `
 		<ul id="tracks">
 			${results}
@@ -349,7 +355,6 @@ function raceProgress(positions) {
 
 function renderAt(element, html) {
 	const node = document.querySelector(element)
-
 	node.innerHTML = html
 }
 
