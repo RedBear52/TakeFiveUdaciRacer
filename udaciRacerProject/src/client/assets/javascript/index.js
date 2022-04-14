@@ -51,16 +51,18 @@ async function onPageLoad() {
 
 function setupClickHandlers() {
 	document.addEventListener('click', function(event) {
+		let parent = event.target.parentElement
+
 		const { target } = event
 
 		// Race track form field
-		if (target.matches('.card.track')) {
-			handleSelectTrack(target)
+		if (parent.matches('.card.track')) {
+			handleSelectTrack(parent)
 		}
 
 		// Podracer form field
-		if (target.matches('.card.podracer')) {
-			handleSelectPodRacer(target)
+		if (parent.matches('.card.podracer')) {
+			handleSelectPodRacer(parent)
 		}
 
 		// Submit create race form
@@ -78,6 +80,8 @@ function setupClickHandlers() {
 
 	}, false)
 }
+
+
 
 async function delay(ms) {
 	try {
@@ -275,7 +279,7 @@ function renderRaceStartView(track) {
 
 	return `
 		<header>
-			<h1>Track:   ${customTrackNames[index]}</h1>
+			<h1>${customTrackNames[index]} Raceway</h1>
 		</header>
 		<main id="two-columns">
 			<section id="leaderBoard">
@@ -296,13 +300,15 @@ function resultsView(positions) {
 	positions.sort((a, b) => (a.final_position > b.final_position) ? 1 : -1)
 
 	return `
-		<header>
+		<header>r
 			<h1>Race Results</h1>
 		</header>
 		<main id="play-again-link">
 			${raceProgress(positions)}
+			<div style="text-align:center;">
 			<button class="button"><a href="/race">Start a new race</a></button>
-		</main>
+			</div>
+			</main>
 	`
 }
 
@@ -316,7 +322,7 @@ function raceProgress(positions) {
 			return `
 				<tr>
 					<td>
-			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]} YOU</h3>
+			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]}<span id="you"> <=YOU</span></h3>
 					</td>
 				</tr>
 			`
@@ -329,7 +335,7 @@ function raceProgress(positions) {
 				</tr>
 			`
 		}
-	}) 
+	}).join(' ')
 
 	return `
 		<main class="leader-board">

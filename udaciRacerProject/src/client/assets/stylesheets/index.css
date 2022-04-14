@@ -23,7 +23,7 @@ body {
 }
 
 #header-text-prepend {
-  font-size: 5em;
+  font-size: 4em;
   margin: .25em;
 }
 
@@ -32,21 +32,24 @@ header {
   font-size: 1.5em;
   letter-spacing: 0.02em;
   background-image: url('../images/gjones_header_banner.png');
-  background-size: 100vw;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   height: 100%;
-  width: auto;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  margin-top: -5em;
 }
 
 h1 {
   color: black;
-  text-shadow: 3px 2px hsl(0, 2%, 51%);
+  text-shadow: 3px 2px #ffd400;
   font-size: 6em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 h2 {
@@ -70,15 +73,20 @@ h4 {
   font-size: 20px;
 }
 
+#create-race {
+  align-items: center;
+}
+
 p {
   color: black;
   font-weight: normal;
   font-size: 18px;
 }
 
-/* button {
-  text-align: center;
-} */
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 .button {
   width: 250px;
@@ -104,21 +112,26 @@ p {
   display: inline-block;
 }
 
+#submit-create-race {
+  display: grid;
+  margin: auto;
+}
+
 #racers {
   text-align: center;
+}
 
+#you {
+  color: steelblue;
+  text-shadow: 3px 2px #ffd400;
 }
 
 .cards-list {
-  display: flex;
-
-
-
+  display: inline-block;
 }
 
 li {
   background-color: steelblue;
-  /* background-color: #ffd400; */
 }
 
 main {
