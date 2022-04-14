@@ -17,7 +17,6 @@ main#two-columns section {
 }
 
 #results-board {
-    /* background-color: pink; */
     display: inline-block;
     text-align: left;
 }
@@ -25,7 +24,6 @@ main#two-columns section {
 #play-again-link {
     font-family: 'Fjalla One', sans-serif;
     font-size: 2em;
-    /* background-color: aquamarine; */
     text-align: center;
 }
 
@@ -34,10 +32,7 @@ main#two-columns section {
 }
 
 .leader-board {
-    /* background-color: lightsalmon; */
     text-align: center;
-    
-
 }
 
 section#accelerate button {

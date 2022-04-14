@@ -300,7 +300,7 @@ function resultsView(positions) {
 	positions.sort((a, b) => (a.final_position > b.final_position) ? 1 : -1)
 
 	return `
-		<header>r
+		<header>
 			<h1>Race Results</h1>
 		</header>
 		<main id="play-again-link">
@@ -322,7 +322,7 @@ function raceProgress(positions) {
 			return `
 				<tr>
 					<td>
-			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]}<span id="you"> <=YOU</span></h3>
+			<h3>${count++} - ${customRacerNames[userPlayer.driver_name]}<span id="you"><=YOU 🚜 </span></h3>
 					</td>
 				</tr>
 			`
